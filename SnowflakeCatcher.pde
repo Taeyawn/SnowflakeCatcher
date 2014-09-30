@@ -1,43 +1,79 @@
+SnowFlake [] snow;
 void setup()
 {
-  //your code here
+
+  size(300,300);
+  background(0);
+  snow = new SnowFlake[150];
+  for(int i=0; i<snow.length; i++)
+  {
+    snow[i] = new SnowFlake();
+  }
 }
 void draw()
 {
-  //your code here
+  for(int i=0; i<snow.length; i++)
+  {
+    snow[i].erase();
+    snow[i].lookDown();
+    snow[i].move();
+    snow[i].wrap();
+    snow[i].show();
+  }
 }
 void mouseDragged()
 {
-  //your code here
+  fill(255,0,0);
+  noStroke();
+  ellipse(mouseX,mouseY,10,10); 
+  stroke(0);
 }
 
 class SnowFlake
 {
-  //class member variable declarations
+  int x, y;
+  boolean isMoving;
   SnowFlake()
   {
-    //class member variable initializations
+    x = (int)(Math.random()*300);
+    y = (int)(Math.random()*295);
+    isMoving = true;
   }
   void show()
   {
-    //your code here
+    fill(255);
+    ellipse(x,y,5,5);
   }
   void lookDown()
   {
-    //your code here
+   if((y > 0 && y < 300) && (get(x, y+5) != color(0)))
+    {
+      isMoving = false;
+    }
+    else
+    {
+      isMoving = true;
+    }
   }
   void erase()
   {
-    //your code here
+     fill(0);
+     ellipse(x,y,7,7);
   }
   void move()
   {
-    //your code here
+    if(isMoving == true)
+    {
+      y++;
+    }
   }
   void wrap()
   {
-    //your code here
+    if(y==295)
+    {
+      y = 0;
+      x = (int)(Math.random()*300);
+    }
   }
 }
-
 
